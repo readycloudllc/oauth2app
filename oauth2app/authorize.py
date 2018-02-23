@@ -183,17 +183,17 @@ class Authorizer(object):
             raise InvalidClient("client_id %s doesn't exist" % self.client_id)
         # Redirect URI
         if self.redirect_uri is None:
-            if self.client.redirect_uri is None:
+            if self.client.redirect_uris is None:
                 raise MissingRedirectURI("No redirect_uri"
                     "provided or registered.")
-        elif self.client.redirect_uri is not None:
+        elif self.client.redirect_uris is not None:
             parsed_uri = urlparse(normalize(self.redirect_uri))
-            parsed_client_uri = urlparse(normalize(self.client.redirect_uri))
-            if parsed_uri[:4] != parsed_client_uri[:4]:
-                self.redirect_uri = self.client.redirect_uri
+            parsed_client_uris = [urlparse(normalize(uri))[:4] for uri in self.client.redirect_uris]
+            if parsed_uri[:4] not in parsed_client_uris:
+                self.redirect_uri = self.client.redirect_uris[0]
                 raise InvalidRequest("Registered redirect_uri doesn't "
                     "match provided redirect_uri.")
-        self.redirect_uri = self.redirect_uri or self.client.redirect_uri
+        self.redirect_uri = self.redirect_uri or self.client.redirect_uris[0]
         # Check response type
         if self.response_type is None:
             raise InvalidRequest('response_type is a required parameter.')

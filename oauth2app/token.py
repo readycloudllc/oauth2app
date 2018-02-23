@@ -227,11 +227,11 @@ class TokenGenerator(object):
 
         # Check/Set redirect uri
         if self.redirect_uri is None:
-            if self.client.redirect_uri is None:
+            if self.client.redirect_uris is None:
                 raise MissingRedirectURI("No redirect_uri"
                     "provided or registered.")
             else:
-                self.redirect_uri = self.client.redirect_uri
+                self.redirect_uri = self.client.redirect_uris[0]
         # Scope
         if self.scope is not None:
             access_ranges = AccessRange.objects.filter(key__in=self.scope)

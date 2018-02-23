@@ -9,6 +9,8 @@ from hashlib import sha512
 from uuid import uuid4
 from django.db import models
 from django.conf import settings
+from jsonfield.fields import JSONField
+
 from .consts import CLIENT_KEY_LENGTH, CLIENT_SECRET_LENGTH
 from .consts import SCOPE_LENGTH
 from .consts import ACCESS_TOKEN_LENGTH, REFRESH_TOKEN_LENGTH
@@ -76,7 +78,7 @@ class Client(models.Model):
       random string*
     * *secret:* A string representing the client secret. *Default 30 character
       random string*
-    * *redirect_uri:* A string representing the client redirect_uri.
+    * *redirect_uris:* A json representing the list of redirect_uris.
       *Default None*
 
     """
@@ -92,8 +94,13 @@ class Client(models.Model):
         unique=True,
         max_length=CLIENT_SECRET_LENGTH,
         default=KeyGenerator(CLIENT_SECRET_LENGTH))
-    redirect_uri = models.URLField(null=True)
+    redirect_uris = JSONField(null=True)
     approved = models.BooleanField(default=True)
+
+    @property
+    def redirect_uri(self):
+        if self.redirect_uris:
+            return self.redirect_uris[0]
 
     def __unicode__(self):
         return self.name
