@@ -2,7 +2,7 @@
 
 
 """OAuth 2.0 Token Generation"""
-
+from oauth2app.oauth2app.authorize import MissingRedirectURI
 
 try:
     import simplejson as json
