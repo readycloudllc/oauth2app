@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 
 """OAuth 2.0 Django Models"""
@@ -126,6 +126,7 @@ class AccessRange(models.Model):
     def __unicode__(self):
         return self.key
 
+
 class AccessToken(models.Model):
     """Stores access token data.
 
@@ -175,6 +176,7 @@ class AccessToken(models.Model):
         default=TimestampGenerator(ACCESS_TOKEN_EXPIRATION))
     scope = models.ManyToManyField(AccessRange)
     refreshable = models.BooleanField(default=REFRESHABLE)
+
 
 class Code(models.Model):
     """Stores authorization code data.

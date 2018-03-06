@@ -20,6 +20,7 @@ def rollback_many_uris(apps, schema_editor):
             client.redirect_uri = client.redirect_uris[0]
             client.save()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [

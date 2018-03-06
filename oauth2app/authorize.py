@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 
 """OAuth 2.0 Authorization"""
@@ -78,8 +78,9 @@ class InvalidScope(AuthorizationException):
 
 
 RESPONSE_TYPES = {
-    "code":CODE,
-    "token":TOKEN}
+    "code": CODE,
+    "token": TOKEN
+}
 
 
 class Authorizer(object):
@@ -110,14 +111,11 @@ class Authorizer(object):
             refreshable=REFRESHABLE,
             response_type=CODE):
         if response_type not in [CODE, TOKEN, CODE_AND_TOKEN]:
-            raise OAuth2Exception("Possible values for response_type"
-                " are oauth2app.consts.CODE, oauth2app.consts.TOKEN, "
-                "oauth2app.consts.CODE_AND_TOKEN")
+            raise OAuth2Exception("Possible values for response_type are oauth2app.consts.CODE, oauth2app.consts.TOKEN, oauth2app.consts.CODE_AND_TOKEN")
         self.authorized_response_type = response_type
         self.refreshable = refreshable
         if authentication_method not in [BEARER, MAC]:
-            raise OAuth2Exception("Possible values for authentication_method"
-                " are oauth2app.consts.MAC and oauth2app.consts.BEARER")
+            raise OAuth2Exception("Possible values for authentication_method are oauth2app.consts.MAC and oauth2app.consts.BEARER")
         self.authentication_method = authentication_method
         if scope is None:
             self.authorized_scope = None
@@ -184,15 +182,13 @@ class Authorizer(object):
         # Redirect URI
         if self.redirect_uri is None:
             if self.client.redirect_uris is None:
-                raise MissingRedirectURI("No redirect_uri"
-                    "provided or registered.")
+                raise MissingRedirectURI("No redirect_uri provided or registered.")
         elif self.client.redirect_uris is not None:
             parsed_uri = urlparse(normalize(self.redirect_uri))
             parsed_client_uris = [urlparse(normalize(uri))[:4] for uri in self.client.redirect_uris]
             if parsed_uri[:4] not in parsed_client_uris:
                 self.redirect_uri = self.client.redirect_uris[0]
-                raise InvalidRequest("Registered redirect_uri doesn't "
-                    "match provided redirect_uri.")
+                raise InvalidRequest("Registered redirect_uri doesn't match provided redirect_uri.")
         self.redirect_uri = self.redirect_uri or self.client.redirect_uris[0]
         # Check response type
         if self.response_type is None:
@@ -258,11 +254,11 @@ class Authorizer(object):
 
         *Returns str*"""
         if not self.valid:
-            raise UnvalidatedRequest("This request is invalid or has not"
-                "been validated.")
+            raise UnvalidatedRequest("This request is invalid or has not been validated.")
         parameters = {
-            "response_type":self.response_type,
-            "client_id":self.client_id}
+            "response_type": self.response_type,
+            "client_id": self.client_id
+        }
         if self.redirect_uri is not None:
             parameters["redirect_uri"] = self.redirect_uri
         if self.state is not None:
@@ -282,8 +278,7 @@ class Authorizer(object):
 
         *Returns HttpResponseRedirect*"""
         if not self.valid:
-            raise UnvalidatedRequest("This request is invalid or has not "
-                "been validated.")
+            raise UnvalidatedRequest("This request is invalid or has not been validated.")
         if self.user and self.user.is_authenticated():
             parameters = {}
             fragments = {}
@@ -327,5 +322,4 @@ class Authorizer(object):
             redirect_uri = add_fragments(redirect_uri, fragments)
             return HttpResponseRedirect(redirect_uri)
         else:
-            raise UnauthenticatedUser("Django user object associated with the "
-                "request is not authenticated.")
+            raise UnauthenticatedUser("Django user object associated with the request is not authenticated.")

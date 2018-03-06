@@ -1,11 +1,13 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 
 """OAuth 2.0 Token Generation"""
 
 
-try: import simplejson as json
-except ImportError: import json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 import re
 from base64 import b64encode
 from django.http import HttpResponse
@@ -125,8 +127,7 @@ class TokenGenerator(object):
             refreshable=REFRESHABLE):
         self.refreshable = refreshable
         if authentication_method not in [BEARER, MAC]:
-            raise OAuth2Exception("Possible values for authentication_method"
-                " are oauth2app.consts.MAC and oauth2app.consts.BEARER")
+            raise OAuth2Exception("Possible values for authentication_method are oauth2app.consts.MAC and oauth2app.consts.BEARER")
         self.authentication_method = authentication_method
         if scope is None:
             self.authorized_scope = None
@@ -191,7 +192,7 @@ class TokenGenerator(object):
         self.request = request
         try:
             self.validate()
-        except AccessTokenException, e:
+        except AccessTokenException:
             return self.error_response()
         return self.grant_response()
 
@@ -228,8 +229,7 @@ class TokenGenerator(object):
         # Check/Set redirect uri
         if self.redirect_uri is None:
             if self.client.redirect_uris is None:
-                raise MissingRedirectURI("No redirect_uri"
-                    "provided or registered.")
+                raise MissingRedirectURI("No redirect_uri provided or registered.")
             else:
                 self.redirect_uri = self.client.redirect_uris[0]
         # Scope
@@ -238,8 +238,7 @@ class TokenGenerator(object):
             access_ranges = set(access_ranges.values_list('key', flat=True))
             difference = access_ranges.symmetric_difference(self.scope)
             if len(difference) != 0:
-                raise InvalidScope("Following access ranges doesn't exist: "
-                    "%s" % ', '.join(difference))
+                raise InvalidScope("Following access ranges doesn't exist: %s" % ', '.join(difference))
         if self.grant_type == "authorization_code":
             self._validate_authorization_code()
         elif self.grant_type == "refresh_token":
@@ -337,8 +336,8 @@ class TokenGenerator(object):
             self.access_token = AccessToken.objects.get(
                 refresh_token=self.refresh_token)
         except AccessToken.DoesNotExist:
-            raise InvalidRequest(
-                'No such refresh token: %s' % self.refresh_token)
+            raise InvalidRequest('No such refresh token: %s' % self.refresh_token)
+
         self._validate_access_credentials()
         if not self.access_token.refreshable:
             raise InvalidGrant("Access token is not refreshable.")
@@ -346,8 +345,7 @@ class TokenGenerator(object):
             access_ranges = set([x.key for x in self.access_token.scope.all()])
             new_scope = self.scope - access_ranges
             if len(new_scope) > 0:
-                raise InvalidScope("Refresh request requested scopes beyond"
-                "initial grant: %s" % new_scope)
+                raise InvalidScope("Refresh request requested scopes beyond initial grant: %s" % new_scope)
 
     def error_response(self):
         """In the event of an error, return a Django HttpResponse
@@ -378,8 +376,7 @@ class TokenGenerator(object):
     def grant_response(self):
         """Returns a JSON formatted authorization code."""
         if not self.valid:
-            raise UnvalidatedRequest("This request is invalid or has not been"
-                " validated.")
+            raise UnvalidatedRequest("This request is invalid or has not been validated.")
         if self.grant_type == "authorization_code":
             access_token = self._get_authorization_code_token()
         elif self.grant_type == "refresh_token":
