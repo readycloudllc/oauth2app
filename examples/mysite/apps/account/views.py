@@ -22,16 +22,16 @@ def clients(request):
         elif remove_form.is_valid():
             Client.objects.filter(
                 id=remove_form.cleaned_data["client_id"]).delete()
-            form = CreateClientForm()           
+            form = CreateClientForm()
     else:
         form = CreateClientForm()
     template = {
-        "form":form, 
+        "form":form,
         "clients":Client.objects.filter(user=request.user)}
     return render_to_response(
-        'account/clients.html', 
-        template, 
-        RequestContext(request))    
+        'account/clients.html',
+        template,
+        RequestContext(request))
 
 
 def login(request):
@@ -47,17 +47,17 @@ def login(request):
         form = LoginForm()
     template = {"form":form}
     return render_to_response(
-        'account/login.html', 
-        template, 
+        'account/login.html',
+        template,
         RequestContext(request))
- 
-    
-@login_required    
+
+
+@login_required
 def logout(request):
     auth.logout(request)
     return render_to_response(
-        'account/logout.html', 
-        {}, 
+        'account/logout.html',
+        {},
         RequestContext(request))
 
 
@@ -78,6 +78,6 @@ def signup(request):
         form = SignupForm()
     template = {"form":form}
     return render_to_response(
-        'account/signup.html', 
-        template, 
+        'account/signup.html',
+        template,
         RequestContext(request))

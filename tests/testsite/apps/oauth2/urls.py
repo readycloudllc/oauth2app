@@ -3,10 +3,10 @@ from django.conf.urls import patterns, url
 from oauth2app.token import TokenGenerator
 from oauth2app.consts import MAC
 
-urlpatterns = patterns('',
+urlpatterns = patterns(
         (r'^missing_redirect_uri/?$',           'testsite.apps.oauth2.views.missing_redirect_uri'),
-        (r'^authorize_not_refreshable/?$',      'testsite.apps.oauth2.views.authorize_not_refreshable'),     
-        (r'^authorize_mac/?$',                  'testsite.apps.oauth2.views.authorize_mac'),        
+        (r'^authorize_not_refreshable/?$',      'testsite.apps.oauth2.views.authorize_not_refreshable'),
+        (r'^authorize_mac/?$',                  'testsite.apps.oauth2.views.authorize_mac'),
         (r'^authorize_first_name/?$',           'testsite.apps.oauth2.views.authorize_first_name'),
         (r'^authorize_first_name/?$',           'testsite.apps.oauth2.views.authorize_last_name'),
         (r'^authorize_first_and_last_name/?$',  'testsite.apps.oauth2.views.authorize_first_and_last_name'),
