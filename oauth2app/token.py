@@ -179,7 +179,7 @@ class TokenGenerator(object):
                 self.code_key = get_from_request_data(request, 'code')
             self.redirect_uri = get_from_request_data(request, 'redirect_uri')
             # refresh_token, see 6.  Refreshing an Access Token
-            self.refresh_token = get_from_request_data('refresh_token')
+            self.refresh_token = get_from_request_data(request, 'refresh_token')
             # password, see 4.3.2. Access Token Request
             self.email = get_from_request_data(request, 'email')
             self.username = get_from_request_data(request, 'username')
