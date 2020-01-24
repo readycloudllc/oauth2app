@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 
 """OAuth 2.0 URI Helper Functions"""
@@ -17,7 +17,7 @@ def add_parameters(url, parameters):
 
     *Returns str*"""
     parts = list(urlparse(url))
-    parts[4] = urlencode(parse_qsl(parts[4]) + parameters.items())
+    parts[4] = urlencode(parse_qsl(parts[4]) + list(parameters.items()))
     return urlunparse(parts)
 
 
@@ -31,7 +31,7 @@ def add_fragments(url, fragments):
 
     *Returns str*"""
     parts = list(urlparse(url))
-    parts[5] = urlencode(parse_qsl(parts[5]) + fragments.items())
+    parts[5] = urlencode(parse_qsl(parts[5]) + list(fragments.items()))
     return urlunparse(parts)
 
 

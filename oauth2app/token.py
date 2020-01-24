@@ -2,6 +2,8 @@
 
 
 """OAuth 2.0 Token Generation"""
+from six import text_type
+
 from oauth2app.oauth2app.authorize import MissingRedirectURI
 
 try:
@@ -356,7 +358,7 @@ class TokenGenerator(object):
             e = self.error
         else:
             e = InvalidRequest("Access Denied.")
-        data = {'error': e.error, 'error_description': u'%s' % e.message}
+        data = {'error': e.error, 'error_description': u'%s' % text_type(e)}
         json_data = json.dumps(data)
         if self.callback is not None:
             json_data = "%s(%s);" % (self.callback, json_data)
