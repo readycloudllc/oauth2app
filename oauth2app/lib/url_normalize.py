@@ -32,8 +32,8 @@ __version__ = 1.1
 
 import re
 import unicodedata
-import urlparse
-from urllib import quote, unquote
+from future.moves.urllib.parse import urlparse, quote, unquote
+from six import text_type
 
 
 def url_normalize(url, charset='utf-8'):
@@ -50,7 +50,7 @@ def url_normalize(url, charset='utf-8'):
     """
 
     def _clean(string):
-        string = unicode(unquote(string), 'utf-8', 'replace')
+        string = text_type(unquote(string), 'utf-8', 'replace')
         return unicodedata.normalize('NFC', string).encode('utf-8')
 
     default_port = {
@@ -65,7 +65,7 @@ def url_normalize(url, charset='utf-8'):
         'snews': 563,
         'snntp': 563,
     }
-    if isinstance(url, unicode):
+    if isinstance(url, text_type):
         url = url.encode(charset, 'ignore')
 
     # if there is no scheme use http as default scheme

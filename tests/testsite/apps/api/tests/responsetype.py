@@ -1,8 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from base64 import b64encode
-from urlparse import urlparse, parse_qs
-from urllib import urlencode
+from future.moves.urllib.parse import urlparse, urlencode, parse_qs
 from django.utils import unittest
 from django.test.client import Client as DjangoTestClient
 try:
@@ -23,7 +22,7 @@ REDIRECT_URI = "http://example.com/callback"
 
 
 class ResponseTypeTestCase(unittest.TestCase):
-    
+
     user = None
     client_holder = None
     client_application = None

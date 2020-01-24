@@ -5,8 +5,7 @@
 
 import re
 from django.http import HttpResponseRedirect
-from urllib import urlencode
-from urlparse import urlparse
+from future.moves.urllib.parse import urlparse, urlencode
 from .consts import ACCESS_TOKEN_EXPIRATION, REFRESHABLE
 from .consts import CODE, TOKEN, CODE_AND_TOKEN
 from .consts import AUTHENTICATION_METHOD, MAC, BEARER, MAC_KEY_LENGTH

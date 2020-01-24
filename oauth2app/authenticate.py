@@ -2,12 +2,12 @@
 
 
 """OAuth 2.0 Authentication"""
-
+from future.backports.urllib.parse import parse_qsl
 
 try: import simplejson as json
 except ImportError: import json
 from hashlib import sha256
-from urlparse import parse_qsl
+
 from django.conf import settings
 from django.http import HttpResponse
 from .exceptions import OAuth2Exception
@@ -101,7 +101,7 @@ class Authenticator(object):
         self.request_port = self.request.META.get("SERVER_PORT")
         try:
             self._validate()
-        except AuthenticationException, e:
+        except AuthenticationException as e:
             self.error = e
             raise e
         self.valid = True

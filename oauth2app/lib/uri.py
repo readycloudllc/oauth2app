@@ -3,14 +3,12 @@
 
 """OAuth 2.0 URI Helper Functions"""
 
+from future.moves.urllib.parse import urlparse, urlunparse, urlencode, parse_qsl
+from oauth2app.oauth2app.lib.url_normalize import url_normalize
 
-from urlparse import urlparse, urlunparse, parse_qsl
-from urllib import urlencode
-from url_normalize import url_normalize
- 
- 
+
 def add_parameters(url, parameters):
-    """Parses URL and appends parameters. 
+    """Parses URL and appends parameters.
 
     **Args:**
 
@@ -21,10 +19,10 @@ def add_parameters(url, parameters):
     parts = list(urlparse(url))
     parts[4] = urlencode(parse_qsl(parts[4]) + parameters.items())
     return urlunparse(parts)
-    
+
 
 def add_fragments(url, fragments):
-    """Parses URL and appends fragments. 
+    """Parses URL and appends fragments.
 
     **Args:**
 
@@ -35,8 +33,8 @@ def add_fragments(url, fragments):
     parts = list(urlparse(url))
     parts[5] = urlencode(parse_qsl(parts[5]) + fragments.items())
     return urlunparse(parts)
-    
-    
+
+
 def normalize(url):
     """Normalizes URL.
 
@@ -46,4 +44,3 @@ def normalize(url):
 
     *Returns str*"""
     return url_normalize(url)
-    

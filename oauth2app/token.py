@@ -203,7 +203,7 @@ class TokenGenerator(object):
         *Returns None*"""
         try:
             self._validate()
-        except AccessTokenException, e:
+        except AccessTokenException as e:
             self.error = e
             raise e
         self.valid = True
