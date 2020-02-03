@@ -10,8 +10,7 @@ from oauth2app.models import Client
 from django.test.client import Client as DjangoTestClient
 from django.utils import unittest
 from base64 import b64encode
-from urlparse import urlparse, parse_qs
-from urllib import urlencode
+from future.moves.urllib.parse import urlparse, urlencode, parse_qs
 
 USER_USERNAME = "testuser"
 USER_PASSWORD = "testpassword"

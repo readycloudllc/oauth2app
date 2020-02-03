@@ -3,8 +3,7 @@
 try: import simplejson as json
 except ImportError: import json
 from base64 import b64encode
-from urlparse import urlparse, parse_qs
-from urllib import urlencode
+from future.moves.urllib.parse import urlparse, urlencode, parse_qs
 from django.utils import unittest
 try:
     from django.contrib.auth import get_user_model  # Django 1.5+
