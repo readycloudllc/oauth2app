@@ -34,6 +34,8 @@ from __future__ import unicode_literals
 import re
 import unicodedata
 from future.moves.urllib.parse import quote, unquote, urlsplit, urlunsplit
+from six import text_type
+
 
 __license__ = "Python"
 __version__ = "1.3.3"
@@ -49,7 +51,7 @@ def _clean(string, charset='utf-8'):
         string : an unquoted and normalized string
 
     """
-    string = unquote(string)
+    string = text_type(unquote(string))
     return unicodedata.normalize('NFC', string).encode(charset)
 
 DEFAULT_PORT = {
