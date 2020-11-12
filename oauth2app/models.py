@@ -2,8 +2,7 @@
 
 
 """OAuth 2.0 Django Models"""
-
-
+import sys
 import time
 from hashlib import sha512
 from uuid import uuid4
@@ -18,6 +17,7 @@ from .consts import ACCESS_TOKEN_EXPIRATION, MAC_KEY_LENGTH, REFRESHABLE
 from .consts import CODE_KEY_LENGTH, CODE_EXPIRATION
 
 
+PY3 = sys.version_info[0] == 3
 AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 
@@ -61,7 +61,12 @@ class KeyGenerator(object):
         return ('oauth2app.oauth2app.models.KeyGenerator', [], kwargs)
 
 
-class Client(models.Model):
+class UnicodeModelMixin(object):
+    def __str__(self):
+        return self.__unicode__() if PY3 else super(UnicodeModelMixin, self).__str__()
+
+
+class Client(UnicodeModelMixin, models.Model):
     """Stores client authentication data.
 
     **Args:**
@@ -106,7 +111,7 @@ class Client(models.Model):
         return self.name
 
 
-class AccessRange(models.Model):
+class AccessRange(UnicodeModelMixin, models.Model):
     """Stores access range data, also known as scope.
 
     **Args:**
@@ -127,7 +132,7 @@ class AccessRange(models.Model):
         return self.key
 
 
-class AccessToken(models.Model):
+class AccessToken(UnicodeModelMixin, models.Model):
     """Stores access token data.
 
     **Args:**
@@ -178,7 +183,7 @@ class AccessToken(models.Model):
     refreshable = models.BooleanField(default=REFRESHABLE)
 
 
-class Code(models.Model):
+class Code(UnicodeModelMixin, models.Model):
     """Stores authorization code data.
 
     **Args:**
@@ -216,7 +221,7 @@ class Code(models.Model):
         return self.key
 
 
-class MACNonce(models.Model):
+class MACNonce(UnicodeModelMixin, models.Model):
     """Stores Nonce strings for use with MAC Authentication.
 
     **Args:**
