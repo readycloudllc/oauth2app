@@ -182,6 +182,9 @@ class AccessToken(UnicodeModelMixin, models.Model):
     scope = models.ManyToManyField(AccessRange)
     refreshable = models.BooleanField(default=REFRESHABLE)
 
+    def __unicode__(self):
+        return self.token
+
 
 class Code(UnicodeModelMixin, models.Model):
     """Stores authorization code data.
@@ -221,7 +224,7 @@ class Code(UnicodeModelMixin, models.Model):
         return self.key
 
 
-class MACNonce(UnicodeModelMixin, models.Model):
+class MACNonce(models.Model):
     """Stores Nonce strings for use with MAC Authentication.
 
     **Args:**
