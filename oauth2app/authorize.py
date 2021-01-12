@@ -296,7 +296,7 @@ class Authorizer(object):
                 access_token = AccessToken.objects.create(
                     user=self.user,
                     client=self.client)
-                access_token.scope = access_ranges
+                access_token.scope.set(access_ranges)
                 fragments['access_token'] = access_token.token
                 fragments['user'] = self.user.username
                 if access_token.refreshable:
