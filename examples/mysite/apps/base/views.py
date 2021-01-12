@@ -8,7 +8,7 @@ from oauth2app.models import Client, AccessToken
 
 def homepage(request):
     template = {}
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         clients = Client.objects.filter(user=request.user)
         access_tokens = AccessToken.objects.filter(user=request.user)
         access_tokens = access_tokens.select_related()
