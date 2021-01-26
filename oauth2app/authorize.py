@@ -277,7 +277,7 @@ class Authorizer(object):
         *Returns HttpResponseRedirect*"""
         if not self.valid:
             raise UnvalidatedRequest("This request is invalid or has not been validated.")
-        if self.user and self.user.is_authenticated():
+        if self.user and self.user.is_authenticated:
             parameters = {}
             fragments = {}
             if self.scope is not None:
@@ -296,7 +296,7 @@ class Authorizer(object):
                 access_token = AccessToken.objects.create(
                     user=self.user,
                     client=self.client)
-                access_token.scope = access_ranges
+                access_token.scope.set(access_ranges)
                 fragments['access_token'] = access_token.token
                 fragments['user'] = self.user.username
                 if access_token.refreshable:

@@ -1,13 +1,10 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-try: import simplejson as json
-except ImportError: import json
 from base64 import b64encode
 from django.utils import unittest
 from django.contrib.auth.models import User
 from oauth2app.models import Client
 from django.test.client import Client as DjangoTestClient
-
 
 USER_USERNAME = "testuser"
 USER_PASSWORD = "testpassword"
@@ -20,7 +17,6 @@ REDIRECT_URI = "http://example.com/callback"
 
 
 class GrantTypeTestCase(unittest.TestCase):
-
     user = None
     client_holder = None
     client_application = None
@@ -52,9 +48,8 @@ class GrantTypeTestCase(unittest.TestCase):
             "grant_type": "client_credentials",
             "redirect_uri": REDIRECT_URI}
         basic_auth = b64encode("%s:%s" % (self.client_application.key,
-            self.client_application.secret))
-        response = client.get(
+                                          self.client_application.secret))
+        client.get(
             "/oauth2/token",
             parameters,
             HTTP_AUTHORIZATION="Basic %s" % basic_auth)
-        token = json.loads(response.content)

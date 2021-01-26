@@ -1,15 +1,14 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-from base64 import b64encode
 from future.moves.urllib.parse import urlparse, urlencode, parse_qs
 from django.utils import unittest
 from django.test.client import Client as DjangoTestClient
+
 try:
     from django.contrib.auth import get_user_model  # Django 1.5+
-except:
+except ImportError:
     from django.contrib.auth.models import User
 from oauth2app.models import Client
-
 
 USER_USERNAME = "testuser"
 USER_PASSWORD = "testpassword"
@@ -22,7 +21,6 @@ REDIRECT_URI = "http://example.com/callback"
 
 
 class ResponseTypeTestCase(unittest.TestCase):
-
     user = None
     client_holder = None
     client_application = None
@@ -49,16 +47,16 @@ class ResponseTypeTestCase(unittest.TestCase):
         user = DjangoTestClient()
         user.login(username=USER_USERNAME, password=USER_PASSWORD)
         parameters = {
-            "client_id":self.client_application.key,
-            "redirect_uri":REDIRECT_URI,
-            "response_type":"code"}
+            "client_id": self.client_application.key,
+            "redirect_uri": REDIRECT_URI,
+            "response_type": "code"}
         response = user.get("/oauth2/authorize_code?%s" % urlencode(parameters))
         qs = parse_qs(urlparse(response['location']).query)
         self.assertTrue("code" in qs)
         parameters = {
-            "client_id":self.client_application.key,
-            "redirect_uri":REDIRECT_URI,
-            "response_type":"token"}
+            "client_id": self.client_application.key,
+            "redirect_uri": REDIRECT_URI,
+            "response_type": "token"}
         response = user.get("/oauth2/authorize_code?%s" % urlencode(parameters))
         qs = parse_qs(urlparse(response['location']).query)
         self.assertTrue("error" in qs)
@@ -67,16 +65,16 @@ class ResponseTypeTestCase(unittest.TestCase):
         user = DjangoTestClient()
         user.login(username=USER_USERNAME, password=USER_PASSWORD)
         parameters = {
-            "client_id":self.client_application.key,
-            "redirect_uri":REDIRECT_URI,
-            "response_type":"token"}
+            "client_id": self.client_application.key,
+            "redirect_uri": REDIRECT_URI,
+            "response_type": "token"}
         response = user.get("/oauth2/authorize_token?%s" % urlencode(parameters))
         fs = parse_qs(urlparse(response['location']).fragment)
         self.assertTrue("access_token" in fs)
         parameters = {
-            "client_id":self.client_application.key,
-            "redirect_uri":REDIRECT_URI,
-            "response_type":"code"}
+            "client_id": self.client_application.key,
+            "redirect_uri": REDIRECT_URI,
+            "response_type": "code"}
         response = user.get("/oauth2/authorize_token?%s" % urlencode(parameters))
         fs = parse_qs(urlparse(response['location']).fragment)
         self.assertTrue("error" in fs)
@@ -85,9 +83,9 @@ class ResponseTypeTestCase(unittest.TestCase):
         user = DjangoTestClient()
         user.login(username=USER_USERNAME, password=USER_PASSWORD)
         parameters = {
-            "client_id":self.client_application.key,
-            "redirect_uri":REDIRECT_URI,
-            "response_type":"token"}
+            "client_id": self.client_application.key,
+            "redirect_uri": REDIRECT_URI,
+            "response_type": "token"}
         response = user.get("/oauth2/authorize_token_mac?%s" % urlencode(parameters))
         fs = parse_qs(urlparse(response['location']).fragment)
         self.assertTrue("mac_key" in fs)
@@ -96,18 +94,18 @@ class ResponseTypeTestCase(unittest.TestCase):
         user = DjangoTestClient()
         user.login(username=USER_USERNAME, password=USER_PASSWORD)
         parameters = {
-            "client_id":self.client_application.key,
-            "redirect_uri":REDIRECT_URI,
-            "response_type":"code"}
+            "client_id": self.client_application.key,
+            "redirect_uri": REDIRECT_URI,
+            "response_type": "code"}
         response = user.get("/oauth2/authorize_code_and_token?%s" % urlencode(parameters))
         qs = parse_qs(urlparse(response['location']).query)
         self.assertTrue("code" in qs)
         fs = parse_qs(urlparse(response['location']).fragment)
         self.assertTrue("access_token" not in fs)
         parameters = {
-            "client_id":self.client_application.key,
-            "redirect_uri":REDIRECT_URI,
-            "response_type":"token"}
+            "client_id": self.client_application.key,
+            "redirect_uri": REDIRECT_URI,
+            "response_type": "token"}
         response = user.get("/oauth2/authorize_code_and_token?%s" % urlencode(parameters))
         qs = parse_qs(urlparse(response['location']).query)
         self.assertTrue("code" not in qs)
@@ -118,9 +116,9 @@ class ResponseTypeTestCase(unittest.TestCase):
         user = DjangoTestClient()
         user.login(username=USER_USERNAME, password=USER_PASSWORD)
         parameters = {
-            "client_id":self.client_application.key,
-            "redirect_uri":REDIRECT_URI,
-            "response_type":"blah"}
+            "client_id": self.client_application.key,
+            "redirect_uri": REDIRECT_URI,
+            "response_type": "blah"}
         response = user.get("/oauth2/authorize_code_and_token?%s" % urlencode(parameters))
         qs = parse_qs(urlparse(response['location']).query)
         self.assertTrue("error" in qs)

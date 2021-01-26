@@ -1,8 +1,11 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-try: import simplejson as json
-except ImportError: import json
-from .base import *
+try:
+    import simplejson as json
+except ImportError:
+    import json
+from .base import BaseTestCase, DjangoTestClient, USER_EMAIL  # NOQA
+
 
 class JSONTestCase(BaseTestCase):
 

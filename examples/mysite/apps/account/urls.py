@@ -1,9 +1,9 @@
-#-*- coding: utf-8 -*-
-from django.conf.urls import patterns, url
+# -*- coding: utf-8 -*-
+from django.conf.urls import url
 
-urlpatterns = patterns('mysite.apps.account.views',
-    (r'^login/?$',                  'login'),
-    (r'^logout/?$',                 'logout'),
-    (r'^signup/?$',                 'signup'),
-    (r'^clients/?$',                'clients'),
-)
+urlpatterns = [
+    url(r'^login/?$', 'mysite.apps.account.views', 'login'),
+    url(r'^logout/?$', 'mysite.apps.account.views', 'logout'),
+    url(r'^signup/?$', 'mysite.apps.account.views', 'signup'),
+    url(r'^clients/?$', 'mysite.apps.account.views', 'clients'),
+]

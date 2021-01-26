@@ -88,7 +88,7 @@ class Client(UnicodeModelMixin, models.Model):
 
     """
     name = models.CharField(max_length=256)
-    user = models.ForeignKey(AUTH_USER_MODEL)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     description = models.TextField(null=True, blank=True)
     key = models.CharField(
         unique=True,
@@ -154,8 +154,8 @@ class AccessToken(UnicodeModelMixin, models.Model):
       refreshable. *Default False*
 
     """
-    client = models.ForeignKey(Client)
-    user = models.ForeignKey(AUTH_USER_MODEL)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     token = models.CharField(
         unique=True,
         max_length=ACCESS_TOKEN_LENGTH,
@@ -205,8 +205,8 @@ class Code(UnicodeModelMixin, models.Model):
     * *scope:* A list of oauth2app.models.AccessRange objects. *Default None*
 
     """
-    client = models.ForeignKey(Client)
-    user = models.ForeignKey(AUTH_USER_MODEL)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     key = models.CharField(
         unique=True,
         max_length=CODE_KEY_LENGTH,
@@ -233,5 +233,5 @@ class MACNonce(models.Model):
     * *nonce:* A unique nonce string.
 
     """
-    access_token = models.ForeignKey(AccessToken)
+    access_token = models.ForeignKey(AccessToken, on_delete=models.CASCADE)
     nonce = models.CharField(max_length=30, db_index=True)
