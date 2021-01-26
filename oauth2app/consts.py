@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 
 """OAuth 2.0 Default Values."""
@@ -44,8 +44,7 @@ AUTHENTICATION_METHOD = getattr(
     "OAUTH2_AUTHENTICATION_METHOD", 
     BEARER)
 if AUTHENTICATION_METHOD not in [BEARER, MAC]:
-    raise OAuth2Exception("Possible values for OAUTH2_AUTHENTICATION_METHOD "
-        "are oauth2app.consts.MAC and oauth2app.consts.BEARER")
+    raise OAuth2Exception("Possible values for OAUTH2_AUTHENTICATION_METHOD are oauth2app.consts.MAC and oauth2app.consts.BEARER")
 # Authentication realm
 REALM = getattr(settings, "OAUTH2_REALM", "")
 # Grants token style fragments.

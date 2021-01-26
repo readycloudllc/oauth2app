@@ -1,23 +1,23 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Reset
-from oauth2app.models import AccessRange
+
 
 class CreateClientForm(forms.Form):
-    
+
     name = forms.CharField(label="Name", max_length=30)
-    
+
     @property
     def helper(self):
-        form = CreateClientForm()
+        CreateClientForm()
         helper = FormHelper()
-        reset = Reset('','Reset')
+        reset = Reset('', 'Reset')
         helper.add_input(reset)
-        submit = Submit('','Create Client')
+        submit = Submit('', 'Create Client')
         helper.add_input(submit)
         helper.form_action = '/account/clients'
         helper.form_method = 'POST'
@@ -30,16 +30,16 @@ class ClientRemoveForm(forms.Form):
 
 
 class SignupForm(UserCreationForm):
-    
+
     email = forms.EmailField(label="Email")
-    
+
     @property
     def helper(self):
-        form = SignupForm()
+        SignupForm()
         helper = FormHelper()
-        reset = Reset('','Reset')
+        reset = Reset('', 'Reset')
         helper.add_input(reset)
-        submit = Submit('','Sign Up')
+        submit = Submit('', 'Sign Up')
         helper.add_input(submit)
         helper.form_action = '/account/signup'
         helper.form_method = 'POST'
@@ -47,17 +47,17 @@ class SignupForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-    
+
     username = forms.CharField(label="Username", max_length=30)
     password = forms.CharField(label="Password", widget=forms.PasswordInput)
-    
+
     @property
     def helper(self):
-        form = LoginForm()
+        LoginForm()
         helper = FormHelper()
-        reset = Reset('','Reset')
+        reset = Reset('', 'Reset')
         helper.add_input(reset)
-        submit = Submit('','Log In')
+        submit = Submit('', 'Log In')
         helper.add_input(submit)
         helper.form_action = '/account/login'
         helper.form_method = 'POST'

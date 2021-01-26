@@ -1,10 +1,11 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
-import functools, inspect
+import functools
+import inspect
 
 
 def decorator(func):
-    """ Allow to use decorator either with arguments or not. 
+    """ Allow to use decorator either with arguments or not.
     See http://wiki.python.org/moin/PythonDecoratorLibrary#Creating_decorator_with_optional_arguments
     """
 
@@ -15,7 +16,7 @@ def decorator(func):
     if isinstance(func, type):
         def class_wrapper(*args, **kw):
             if isFuncArg(*args, **kw):
-                return func()(*args, **kw) # create class before usage
+                return func()(*args, **kw)  # create class before usage
             return func(*args, **kw)
         class_wrapper.__name__ = func.__name__
         class_wrapper.__module__ = func.__module__
@@ -35,18 +36,11 @@ def decorator(func):
 
 
 @decorator
-def authenticate(func, *args, **kw):
-    """Authenticate a request with no scope."""
-    raise NotImplementedError()
-    return func(*args, **kw)
-
-
-@decorator
 class authenticate(object):
     """Authenticate a request with scope."""
     def __init__(self, *args, **kw):
         self.args = args
-        self.kw   = kw
+        self.kw = kw
 
     def __call__(self, func):
         raise NotImplementedError()

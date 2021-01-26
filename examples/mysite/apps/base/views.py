@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 
 from django.shortcuts import render_to_response
@@ -15,6 +15,6 @@ def homepage(request):
         template["access_tokens"] = access_tokens
         template["clients"] = clients
     return render_to_response(
-        'base/homepage.html', 
-        template, 
+        'base/homepage.html',
+        template,
         RequestContext(request))

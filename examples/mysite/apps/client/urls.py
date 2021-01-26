@@ -1,12 +1,7 @@
-#-*- coding: utf-8 -*-
-from django.conf.urls import patterns, url
-
-urlpatterns = patterns('',)#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+from django.conf.urls import url
 
 
-from django.conf.urls import patterns, url
-
-
-urlpatterns = patterns('mysite.apps.client.views',
-    (r'^(?P<client_id>\w+)/?$',            'client'),
-)# Create your views here.
+urlpatterns = [
+    url(r'^(?P<client_id>\w+)/?$', 'mysite.apps.client.views', 'client'),
+]
