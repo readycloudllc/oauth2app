@@ -131,6 +131,9 @@ class AccessRange(UnicodeModelMixin, models.Model):
     def __unicode__(self):
         return self.key
 
+    class Meta:
+        ordering = ('id', )
+
 
 class AccessToken(UnicodeModelMixin, models.Model):
     """Stores access token data.
