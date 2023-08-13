@@ -21,6 +21,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True)),
             ],
             options={
+                'ordering': ('id',)
             },
             bases=(models.Model,),
         ),
