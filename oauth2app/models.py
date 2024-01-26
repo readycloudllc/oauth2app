@@ -60,7 +60,7 @@ class KeyGenerator:
         self.length = length
 
     def __call__(self):
-        return sha512(uuid4().hex.encode("utf-8")).hexdigest()[0 : self.length]
+        return sha512(uuid4().hex.encode("utf-8")).hexdigest()[0:self.length]
 
     def deconstruct(self):
         kwargs = {"length": 30}
@@ -96,6 +96,8 @@ class Client(models.Model):
     secret = models.CharField(unique=True, max_length=CLIENT_SECRET_LENGTH, default=KeyGenerator(CLIENT_SECRET_LENGTH))
     redirect_uris = JSONField(null=True)
     approved = models.BooleanField(default=True)
+    throttle_limit_get = models.IntegerField(null=True)
+    throttle_limit_other = models.IntegerField(null=True)
 
     @property
     def redirect_uri(self):
