@@ -443,7 +443,7 @@ class TokenGenerator(object):
         if self.scope:
             self.access_token.scope = AccessRange.objects.filter(key__in=self.scope)
         elif not self.access_token.scope.exists():
-            self.access_token.scope = []
+            self.access_token.scope.set([])
         self.access_token.save()
         return self.access_token
 
