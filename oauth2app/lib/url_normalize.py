@@ -94,7 +94,12 @@ def url_normalize(url, charset='utf-8'):
     url = re.sub(r'\?utm_source=feedburner.+$', '', url)
 
     # splitting url to useful parts
-    scheme, auth, path, query, fragment = urlsplit(url.strip())
+    try:
+        scheme, auth, path, query, fragment = urlsplit(url.strip())
+    except ValueError:
+        print("URL !!!!", url)
+        raise
+
     (userinfo, host, port) = re.search('([^@]*@)?([^:]*):?(.*)', auth).groups()
 
     # Always provide the URI scheme in lowercase characters.
