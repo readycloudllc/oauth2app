@@ -230,7 +230,7 @@ class Authenticator(object):
     def error_response(self,
                        content='',
                        mimetype=None,
-                       content_type=settings.DEFAULT_CONTENT_TYPE):
+                       content_type='text/html'):
         """Error response generator. Returns a Django HttpResponse with status
         401 and the approproate headers set. See Django documentation for details.
         https://docs.djangoproject.com/en/dev/ref/request-response/#django.http.HttpResponse.__init__
@@ -239,7 +239,7 @@ class Authenticator(object):
 
         * *content:* See Django docs. *Default ''*
         * *mimetype:* See Django docs. *Default None*
-        * *content_type:* See Django docs. *Default DEFAULT_CONTENT_TYPE*
+        * *content_type:* See Django docs. *Default 'text/html'*
 
         """
         response = HttpResponse(
