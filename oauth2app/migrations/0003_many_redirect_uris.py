@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import migrations
-import jsonfield.fields
+from django.db import migrations, models
 
 
 def make_many_uris(apps, schema_editor):
@@ -31,7 +30,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='client',
             name='redirect_uris',
-            field=jsonfield.fields.JSONField(null=True),
+            field=models.JSONField(null=True, default=list),
         ),
         migrations.RunPython(make_many_uris, rollback_many_uris),
         migrations.RemoveField(

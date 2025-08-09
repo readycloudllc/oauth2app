@@ -6,7 +6,6 @@ from uuid import uuid4
 
 from django.conf import settings
 from django.db import models
-from jsonfield.fields import JSONField
 
 from .consts import (
     ACCESS_TOKEN_EXPIRATION,
@@ -94,7 +93,7 @@ class Client(models.Model):
     description = models.TextField(null=True, blank=True)
     key = models.CharField(unique=True, max_length=CLIENT_KEY_LENGTH, default=KeyGenerator(CLIENT_KEY_LENGTH), db_index=True)
     secret = models.CharField(unique=True, max_length=CLIENT_SECRET_LENGTH, default=KeyGenerator(CLIENT_SECRET_LENGTH))
-    redirect_uris = JSONField(null=True)
+    redirect_uris = models.JSONField(null=True, default=list)
     approved = models.BooleanField(default=True)
     throttle_limit_get = models.IntegerField(null=True)
     throttle_limit_other = models.IntegerField(null=True)
