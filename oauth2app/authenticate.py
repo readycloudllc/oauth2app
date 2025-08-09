@@ -11,7 +11,6 @@ except ImportError:
     import json
 from hashlib import sha256
 
-from django.conf import settings
 from django.http import HttpResponse
 from .exceptions import OAuth2Exception
 from .models import AccessToken, AccessRange, TimestampGenerator
@@ -75,7 +74,8 @@ class Authenticator(object):
     def __init__(
         self,
         scope=None,
-        authentication_method=AUTHENTICATION_METHOD):
+        authentication_method=AUTHENTICATION_METHOD
+    ):
         if authentication_method not in [BEARER, MAC, BEARER | MAC]:
             raise OAuth2Exception("Possible values for authentication_method"
                                   " are oauth2app.consts.MAC, oauth2app.consts.BEARER, "
@@ -172,7 +172,7 @@ class Authenticator(object):
         if self.request_port is None:
             raise InvalidRequest("Request does not contain a port.")
         nonce_timestamp, nonce_string = mac_header["nonce"].split(":")
-        mac = sha256("\n".join([
+        mac = sha256("\n".join([  # noqa
             mac_header["nonce"],  # The nonce value generated for the request
             self.request.method.upper(),  # The HTTP request method
             "XXX",  # The HTTP request-URI
