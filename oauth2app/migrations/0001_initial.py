@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AccessRange',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.BigAutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('key', models.CharField(unique=True, max_length=255, db_index=True)),
                 ('description', models.TextField(blank=True)),
             ],
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AccessToken',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.BigAutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('token', models.CharField(default=oauth2app.oauth2app.models.KeyGenerator(), unique=True, max_length=32, db_index=True)),
                 ('refresh_token', models.CharField(null=True, default=oauth2app.oauth2app.models.KeyGenerator(), max_length=32, blank=True, unique=True, db_index=True)),
                 ('mac_key', models.CharField(default=None, max_length=20, unique=True, null=True, blank=True)),
@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Client',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.BigAutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=256)),
                 ('description', models.TextField(null=True, blank=True)),
                 ('key', models.CharField(default=oauth2app.oauth2app.models.KeyGenerator(length=30), unique=True, max_length=30, db_index=True)),
@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Code',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.BigAutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('key', models.CharField(default=oauth2app.oauth2app.models.KeyGenerator(length=30), unique=True, max_length=30, db_index=True)),
                 ('issue', models.PositiveIntegerField(default=oauth2app.oauth2app.models.TimestampGenerator(), editable=False)),
                 ('expire', models.PositiveIntegerField(default=oauth2app.oauth2app.models.TimestampGenerator())),
@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='MACNonce',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('id', models.BigAutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('nonce', models.CharField(max_length=30, db_index=True)),
                 ('access_token', models.ForeignKey(to='oauth2app.AccessToken', on_delete=models.deletion.CASCADE)),
             ],
